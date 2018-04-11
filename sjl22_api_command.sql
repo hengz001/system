@@ -10,31 +10,10 @@ Target Server Type    : MYSQL
 Target Server Version : 50721
 File Encoding         : 65001
 
-Date: 2018-04-11 17:20:28
+Date: 2018-04-11 17:20:15
 */
 
 SET FOREIGN_KEY_CHECKS=0;
-
--- ----------------------------
--- Table structure for gmn_user
--- ----------------------------
-DROP TABLE IF EXISTS `gmn_user`;
-CREATE TABLE `gmn_user` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `username` varchar(32) NOT NULL COMMENT '用户名称',
-  `birthday` date DEFAULT NULL COMMENT '生日',
-  `sex` char(1) DEFAULT NULL COMMENT '性别',
-  `address` varchar(256) DEFAULT NULL COMMENT '地址',
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=30 DEFAULT CHARSET=utf8;
-
--- ----------------------------
--- Records of gmn_user
--- ----------------------------
-INSERT INTO `gmn_user` VALUES ('1', 'zhuheng', '2018-04-09', '男', '北京海淀区');
-INSERT INTO `gmn_user` VALUES ('27', 'SwordGod', null, null, null);
-INSERT INTO `gmn_user` VALUES ('28', 'SwordGod', null, null, null);
-INSERT INTO `gmn_user` VALUES ('29', 'SwordGod', null, null, null);
 
 -- ----------------------------
 -- Table structure for sjl22_api_command
