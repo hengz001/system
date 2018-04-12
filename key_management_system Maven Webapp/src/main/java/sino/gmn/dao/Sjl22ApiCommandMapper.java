@@ -19,4 +19,11 @@ public interface Sjl22ApiCommandMapper {
     int updateByExampleSelective(@Param("record") Sjl22ApiCommand record, @Param("example") Sjl22ApiCommandExample example);
 
     int updateByExample(@Param("record") Sjl22ApiCommand record, @Param("example") Sjl22ApiCommandExample example);
+    //Automatic
+    /************************************************************************/
+    //Manual
+    
+    Sjl22ApiCommand selectSj(int id);
+
+    List<Sjl22ApiCommand> selectAllSj();
 }

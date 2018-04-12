@@ -208,4 +208,13 @@
       <include refid="Update_By_Example_Where_Clause" />
     </if>
   </update>
+  
+  <!-- manual -->
+  <select id="selectSj" parameterType="int" resultMap="BaseResultMap">
+  	SELECT * FROM sjl22_api_command WHERE s_id=#{id}
+  </select>
+  
+  <select id="selectAllSj" resultMap="BaseResultMap">
+  	SELECT * FROM `sjl22_api_command` WHERE s_status=1
+  </select>
 </mapper>

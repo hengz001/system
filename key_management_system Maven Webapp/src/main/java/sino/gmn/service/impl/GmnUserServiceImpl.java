@@ -15,7 +15,6 @@ public class GmnUserServiceImpl implements GmnUserService{
 	
 	public int insert(GmnUser record) {
 		gm.insert(record);
-		System.out.println("------------->this is service implements");
 		return 0;
 	}
 
