@@ -2,7 +2,7 @@ package sino.gmn.entity;
 
 public class PageUtil {
     private int totalCount;//总数
-    private int pageSize=10;//每页显示数量
+    private int pageSize;//每页显示数量
     private int currpageNum;//当前页
     private int pageCount;//总页数
     private int prePage;//上一页
@@ -26,12 +26,21 @@ public class PageUtil {
             hasPrePage=true;   
             prePage = pageNum-1;
             firstPage =1;
+        }else{
+        	hasPrePage=false;   
+            prePage = pageNum;
+            firstPage =1;
         }
+        
         if(pageNum<pageCount){//判断是不是最后一页   
             /*--不是最后一页 则有上一页 ，也有最后一页--*/
             hasNextPage=true;
             nextPage=pageNum+1;
             lastPage=pageCount;
+        }else{
+    	   hasNextPage=false;
+           nextPage=pageNum;
+           lastPage=pageCount;
         }
     }
     public int getTotalCount() {
@@ -49,19 +58,56 @@ public class PageUtil {
             hasPrePage=true;   
             prePage = currpageNum-1;
             firstPage =1;
+        }else{
+        	hasPrePage=false;   
+            prePage = currpageNum;
+            firstPage =1;
         }
+        
         if(currpageNum<pageCount){//判断是不是最后一页   
             /*--不是最后一页 则有上一页 ，也有最后一页--*/
             hasNextPage=true;
             nextPage=currpageNum+1;
             lastPage=pageCount;
+        }else{
+    	   hasNextPage=false;
+           nextPage=currpageNum;
+           lastPage=pageCount;
         }
+        
         this.totalCount = totalCount;
     }
     public int getPageSize() {
         return pageSize;
     }
     public void setPageSize(int pageSize) {
+        this.pageCount = (int) Math.ceil(1.0*totalCount/pageSize);
+        if(this.currpageNum < 1)
+        {
+            this.currpageNum = 1 ; 
+        }
+        this.currentcount =(currpageNum-1)*pageSize;
+        if(currpageNum>1){  //判断是不是第一页   
+            /*--不是第一页 则有上一页 ，也有第一页--*/
+            hasPrePage=true;   
+            prePage = currpageNum-1;
+            firstPage =1;
+        }else{
+        	hasPrePage=false;   
+            prePage = currpageNum;
+            firstPage =1;
+        }
+        
+        if(currpageNum<pageCount){//判断是不是最后一页   
+            /*--不是最后一页 则有上一页 ，也有最后一页--*/
+            hasNextPage=true;
+            nextPage=currpageNum+1;
+            lastPage=pageCount;
+        }else{
+    	   hasNextPage=false;
+           nextPage=currpageNum;
+           lastPage=pageCount;
+        }
         this.pageSize = pageSize;
     }
     public int getPrePage() {
@@ -105,6 +151,27 @@ public class PageUtil {
         return currpageNum;
     }
     public void setCurrpageNum(int currpageNum) {
+        if(currpageNum>1){  //判断是不是第一页   
+            /*--不是第一页 则有上一页 ，也有第一页--*/
+            hasPrePage=true;   
+            prePage = currpageNum-1;
+            firstPage =1;
+        }else{
+        	hasPrePage=false;   
+            prePage = currpageNum;
+            firstPage =1;
+        }
+        
+        if(currpageNum<pageCount){//判断是不是最后一页   
+            /*--不是最后一页 则有上一页 ，也有最后一页--*/
+            hasNextPage=true;
+            nextPage=currpageNum+1;
+            lastPage=pageCount;
+        }else{
+    	   hasNextPage=false;
+           nextPage=currpageNum;
+           lastPage=pageCount;
+        }
         this.currpageNum = currpageNum;
     }
     public int getPageCount() {
@@ -120,5 +187,11 @@ public class PageUtil {
         this.currentcount = currentcount;
     }
 
+    public String toString() {
+		return "PageUtil [totalCount=" + totalCount + ", pageSize=" + pageSize + ", currpageNum=" + currpageNum
+				+ ", pageCount=" + pageCount + ", prePage=" + prePage + ", nextPage=" + nextPage + ", hasPrePage="
+				+ hasPrePage + ", hasNextPage=" + hasNextPage + ", firstPage=" + firstPage + ", lastPage=" + lastPage
+				+ ", currentcount=" + currentcount + "]";
+	}
 
 }

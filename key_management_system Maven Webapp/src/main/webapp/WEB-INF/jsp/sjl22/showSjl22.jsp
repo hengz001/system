@@ -21,9 +21,44 @@
 <script src="https://cdn.bootcss.com/jquery/1.12.4/jquery.min.js"></script>
 <!-- 加载 Bootstrap 的所有 JavaScript 插件。你也可以根据需要只加载单个插件。 -->
 <script src="<%=basePath%>bootstrap-3.3.7/js/bootstrap.js"></script>
+
+<script type="text/javascript">
+	<!-- 
+	/*
+	private int totalCount;//总数
+    private int pageSize=10;//每页显示数量
+    private int currpageNum;//当前页
+    private int pageCount;//总页数
+    private int prePage;//上一页
+    private int nextPage;//下一页
+    private boolean hasPrePage;//是否有上一页
+    private boolean hasNextPage;//是否有下一页
+    private int firstPage;//第一页
+    private int lastPage;//最后一页
+    private int currentcount;//当前从第多少条数据开始显示
+	*/
+ -->
+	function page(i) {
+			var pageSize = $("#select1").val();
+			undefined == pageSize?pageSize=10:pageSize;
+	 		
+	 		var paramType = $("#selectType").val();
+	 		var parameter = $("#parameter").val();
+	 			
+	 		var url = "<%=basePath%>sjl22/findPage.action?"
+				+"currpageNum="+i+
+				"&pageSize="+pageSize;	
+				
+			if("请选择"!=paramType && ""!=parameter){
+		 		url = url+"&paramType="+paramType+
+		 		"&parameter="+parameter;
+			}
+			window.location.href=url;
+	}
+	
+</script>
 </head>
 <body>
-
 	<ul class="nav nav-tabs">
 		<li role="presentation"><a href="<%=basePath%>">添加</a></li>
 		<li role="presentation" class="active"><a href="#">查询</a></li>
@@ -31,19 +66,41 @@
 
 	<nav aria-label="Page navigation">
 		<ul class="pagination">
-			<li><a href="#" aria-label="Previous"> <span
-					aria-hidden="true">&laquo;</span>
+			<li><a aria-label="Previous" <c:if test="${page.hasPrePage}"> onclick="page(${page.prePage});"</c:if> >
+					<span aria-hidden="true">&laquo;</span>
 			</a></li>
-			<li><a href="#">1</a></li>
-			<li><a href="#">2</a></li>
-			<li><a href="#">3</a></li>
-			<li><a href="#">4</a></li>
-			<li><a href="#">5</a></li>
-			<li><a href="#" aria-label="Next"> <span aria-hidden="true">&raquo;</span>
+
+			<c:forEach var="i" begin="1" end="${page.pageCount}">
+				<li
+					<c:if test="${i == page.currpageNum}">
+						class="active"
+					</c:if>><a
+					onclick="page(${i});">${i}</a></li>
+			</c:forEach>
+
+			<li><a aria-label="Next" <c:if test="${page.hasNextPage}"> onclick="page(${page.nextPage});"</c:if> >
+					<span aria-hidden="true">&raquo;</span>
 			</a></li>
 		</ul>
 	</nav>
 
+	总计${page.totalCount!=null?page.totalCount:0}行 &nbsp;&nbsp;
+	
+	<select id="select1" name="select1" onchange="page(1);"> 
+		<option value="1" <c:if test="${page.pageSize==1}"> selected</c:if> />1行
+		<option value="3" <c:if test="${page.pageSize==3}"> selected</c:if> />3行
+		<option value="10" <c:if test="${page.pageSize==10}"> selected</c:if> />10行
+		<option value="100" <c:if test="${page.pageSize==100}"> selected</c:if> />100行
+	</select>
+
+	 <select id="selectType" name="selectType">
+	 	<option/>请选择
+	 	<option value="s_command" <c:if test="${'s_command'.equals(paramType)}"> selected</c:if> />命令
+	 	<option value="s_update_user" <c:if test="${'s_update_user'.equals(paramType)}"> selected</c:if> />操作用户
+	 </select>
+	 <input type="text" id="parameter" name="parameter" value="${parameter}"/>
+	 <input type="button" value="搜索" onclick="page(1);">
+			
 	<table
 		class="table table-striped table-bordered table-hover table-condensed"
 		style="TABLE-LAYOUT:fixed">
@@ -51,7 +108,7 @@
 			<tr align="center">
 				<td
 					style="width:5%;word-break:keep-all;white-space:nowrap;overflow:hidden;text-overflow:ellipsis"><h5>
-						<em><strong>序号</strong></em>
+						<em><strong>*</strong></em>
 						</h1></td>
 				<td
 					style="width:15%;word-break:keep-all;white-space:nowrap;overflow:hidden;text-overflow:ellipsis"><h5>
@@ -79,7 +136,7 @@
 						</h1></td>
 			</tr>
 		</thead>
-		<tbody>
+		<tbody id="tbody1">
 			<c:forEach items="${objs}" var="obj">
 				<tr align="center">
 					<td
@@ -108,5 +165,6 @@
 			</c:forEach>
 		</tbody>
 	</table>
+
 </body>
 </html>

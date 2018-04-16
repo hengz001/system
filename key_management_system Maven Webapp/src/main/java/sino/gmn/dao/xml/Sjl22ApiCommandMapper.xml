@@ -217,4 +217,43 @@
   <select id="selectAllSj" resultMap="BaseResultMap">
   	SELECT * FROM `sjl22_api_command` WHERE s_status=1
   </select>
+  
+  <select id="getCount" resultType="int">
+  	SELECT COUNT(*) FROM `sjl22_api_command` WHERE s_status=1
+  </select>
+  
+  <select id="selectSjRecord" parameterType="int" resultMap="BaseResultMap">
+	SELECT * FROM sjl22_api_command WHERE s_status=1 LIMIT #{first},#{last};
+  </select>
+  
+  <select id="selectSjRecordParam" parameterType="Map" resultMap="BaseResultMap">
+	SELECT * FROM sjl22_api_command WHERE s_status=1 
+	<if test="null != s_id">
+		and s_id=#{s_id} 
+	</if>
+		<if test="null != s_command">
+		and s_command=#{s_command} 
+	</if>
+		<if test="null != s_update_user">
+		and s_update_user=#{s_update_user} 
+	</if>
+	LIMIT #{first},#{last};
+  </select>
+  
+  <select id="getCountParam" parameterType="Map" resultType="int">
+	SELECT COUNT(*) FROM `sjl22_api_command` WHERE s_status=1 
+	<if test="null != s_id">
+		and s_id=#{s_id} 
+	</if>
+		<if test="null != s_command">
+		and s_command=#{s_command} 
+	</if>
+		<if test="null != s_update_user">
+		and s_update_user=#{s_update_user} 
+	</if>
+  </select>
+  
+  
 </mapper>
+
+
