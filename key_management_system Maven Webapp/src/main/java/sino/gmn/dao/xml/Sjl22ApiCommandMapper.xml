@@ -211,23 +211,23 @@
   
   <!-- manual -->
   <select id="selectSj" parameterType="int" resultMap="BaseResultMap">
-  	SELECT * FROM sjl22_api_command WHERE s_id=#{id}
+  	SELECT s_id,s_command,s_request,s_response,s_describe,s_update_time,s_update_user,s_status FROM sjl22_api_command WHERE s_id=#{id}
   </select>
   
   <select id="selectAllSj" resultMap="BaseResultMap">
-  	SELECT * FROM `sjl22_api_command` WHERE s_status=1
+  	SELECT s_id,s_command,s_request,s_response,s_describe,s_update_time,s_update_user,s_status FROM `sjl22_api_command` WHERE s_status=1
   </select>
   
   <select id="getCount" resultType="int">
-  	SELECT COUNT(*) FROM `sjl22_api_command` WHERE s_status=1
+  	SELECT COUNT(s_id) FROM `sjl22_api_command` WHERE s_status=1
   </select>
   
   <select id="selectSjRecord" parameterType="int" resultMap="BaseResultMap">
-	SELECT * FROM sjl22_api_command WHERE s_status=1 LIMIT #{first},#{last};
+	SELECT s_id,s_command,s_request,s_response,s_describe,s_update_time,s_update_user,s_status FROM sjl22_api_command WHERE s_status=1 LIMIT #{first},#{last};
   </select>
   
   <select id="selectSjRecordParam" parameterType="Map" resultMap="BaseResultMap">
-	SELECT * FROM sjl22_api_command WHERE s_status=1 
+	SELECT s_id,s_command,s_request,s_response,s_describe,s_update_time,s_update_user,s_status FROM sjl22_api_command WHERE s_status=1 
 	<if test="null != s_id">
 		and s_id=#{s_id} 
 	</if>
@@ -241,7 +241,7 @@
   </select>
   
   <select id="getCountParam" parameterType="Map" resultType="int">
-	SELECT COUNT(*) FROM `sjl22_api_command` WHERE s_status=1 
+	SELECT COUNT(s_id) FROM `sjl22_api_command` WHERE s_status=1 
 	<if test="null != s_id">
 		and s_id=#{s_id} 
 	</if>
