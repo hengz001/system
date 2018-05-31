@@ -25,6 +25,7 @@ public class Sjl22ApiCommandController {
 		sjl22Service.add(obj);
 		return "forward:show.action";
 	}
+	
 	List<Sjl22ApiCommand> objs;
 	
 	/*
