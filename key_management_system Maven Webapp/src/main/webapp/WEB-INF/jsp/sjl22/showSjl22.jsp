@@ -62,6 +62,7 @@
 	<ul class="nav nav-tabs">
 		<li role="presentation"><a href="<%=basePath%>">添加</a></li>
 		<li role="presentation" class="active"><a href="#">查询</a></li>
+		<li role="presentation"><a href="<%=basePath%>sjl22/file.action">读取文件</a></li>
 	</ul>
 
 	<nav aria-label="Page navigation">
@@ -70,6 +71,7 @@
 					<span aria-hidden="true">&laquo;</span>
 			</a></li>
 
+			<!--  
 			<c:forEach var="i" begin="1" end="${page.pageCount}">
 				<li
 					<c:if test="${i == page.currpageNum}">
@@ -77,6 +79,16 @@
 					</c:if>><a
 					onclick="page(${i});">${i}</a></li>
 			</c:forEach>
+			-->
+
+			<c:forEach var="i" begin="${page.currpageNum}" end="${page.pageCount}">
+				<c:if test="${i >= page.currpageNum && i <= page.currpageNum+4}">
+					<li <c:if test="${i == page.currpageNum}">class="active"</c:if> >
+						<a onclick="page(${i});">${i}</a>
+					</li>
+				</c:if>
+			</c:forEach>
+
 
 			<li><a aria-label="Next" <c:if test="${page.hasNextPage}"> onclick="page(${page.nextPage});"</c:if> >
 					<span aria-hidden="true">&raquo;</span>

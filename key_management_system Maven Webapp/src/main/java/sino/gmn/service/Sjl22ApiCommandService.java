@@ -1,11 +1,15 @@
 package sino.gmn.service;
 
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.List;
 
 import sino.gmn.entity.PageUtil;
 import sino.gmn.entity.Sjl22ApiCommand;
 
 public interface Sjl22ApiCommandService {
+	
+	public int addAll(InputStream in, String username) throws IOException ;
 	
 	public int add(Sjl22ApiCommand obj);
 	

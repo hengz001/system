@@ -1,23 +1,44 @@
 package sino.gmn.service.impl;
 
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import sino.gmn.dao.Sjl22ApiCommandMapper;
 import sino.gmn.entity.PageUtil;
 import sino.gmn.entity.Sjl22ApiCommand;
 import sino.gmn.service.Sjl22ApiCommandService;
+import sino.gmn.service.ToolsSevice;
 
 @Service("Sjl22ApiCommandService")
 public class Sjl22ApiCommandServiceImpl implements Sjl22ApiCommandService {
 
 	@Autowired
 	Sjl22ApiCommandMapper sjl22Dao;
+	
+	@Autowired
+	ToolsSevice toolService;
+	
+	public int addAll(InputStream in,String username) throws IOException {
+		List<String> key = new ArrayList<String>();
+		List<String> value = new ArrayList<String>();
+		
+		toolService.operationStream(in,key,value);
+		
+		for (int i = 0; i < key.size(); i++) {
+			Sjl22ApiCommand obj = new Sjl22ApiCommand();
+			obj.setsRequest(key.get(i));
+			obj.setsResponse(value.get(i));
+			obj.setsUpdateUser(username);
+			add(obj);
+		}
+		return 0;
+	}
 	
 	public int add(Sjl22ApiCommand obj){
 		if(null==obj || null==obj.getsRequest() || 2>obj.getsRequest().length()){
@@ -29,8 +50,7 @@ public class Sjl22ApiCommandServiceImpl implements Sjl22ApiCommandService {
 		obj.setsCommand(obj.getsRequest().substring(0,2));
 		obj.setsUpdateTime(new Date());
 		obj.setsStatus(1);
-		sjl22Dao.insert(obj);
-		return 0;
+		return sjl22Dao.insert(obj);
 	}
 
 	public Sjl22ApiCommand selectSj(int id) {

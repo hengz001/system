@@ -23,6 +23,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	<ul class="nav nav-tabs">
 		<li role="presentation" class="active"><a href="#">添加</a></li>
 		<li role="presentation"><a href="sjl22/show.action">查询</a></li>
+		<li role="presentation"><a href="sjl22/file.action">读取文件</a></li>
 	</ul>
 
 	<form action="sjl22/add.action" method="post">

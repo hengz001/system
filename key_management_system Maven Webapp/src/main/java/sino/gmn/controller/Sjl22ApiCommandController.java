@@ -1,14 +1,14 @@
 package sino.gmn.controller;
 
+import java.io.IOException;
 import java.util.List;
-
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
-
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 import sino.gmn.entity.PageUtil;
 import sino.gmn.entity.Sjl22ApiCommand;
 import sino.gmn.service.Sjl22ApiCommandService;
@@ -56,6 +56,28 @@ public class Sjl22ApiCommandController {
 			request.setAttribute("page", page);
 		}
 		return "sjl22/showSjl22";
+	}
+	
+	@RequestMapping("/file")
+	public String uploadPage(){
+		return "sjl22/upload";
+	}
+	
+	@RequestMapping("/upload")
+	public String upload(HttpServletRequest request,String username, @RequestParam("file1") MultipartFile file1){
+		String message;
+		
+		message = "successfully.";
+		
+		try {
+			sjl22Service.addAll(file1.getInputStream(),username);
+		} catch (IOException e) {
+			message = "ERROR!";
+			e.printStackTrace();
+		}
+		
+		request.setAttribute("message", message);
+		return "sjl22/message";
 	}
 	
 	@RequestMapping("findPage")
