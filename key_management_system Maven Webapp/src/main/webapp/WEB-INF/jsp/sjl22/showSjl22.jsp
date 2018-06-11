@@ -81,11 +81,13 @@
 			</c:forEach>
 			-->
 
-			<c:forEach var="i" begin="${page.currpageNum}" end="${page.pageCount}">
-				<c:if test="${i >= page.currpageNum && i <= page.currpageNum+4}">
-					<li <c:if test="${i == page.currpageNum}">class="active"</c:if> >
-						<a onclick="page(${i});">${i}</a>
-					</li>
+			<c:forEach var="i" begin="1" end="${page.pageCount}">
+				<c:if test="${page.currpageNum-i<5 && i< page.currpageNum + 5}">
+						<li <c:if test="${i == page.currpageNum}">class="active"</c:if> >
+							<a onclick="page(${i});">
+								<c:if test="${i<10}">0</c:if>${i}
+							</a>
+						</li>
 				</c:if>
 			</c:forEach>
 
