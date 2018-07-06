@@ -2,13 +2,14 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="sino.gmn.dao.Sjl22ApiCommandMapper">
   <resultMap id="BaseResultMap" type="sino.gmn.entity.Sjl22ApiCommand">
-    <result column="id" jdbcType="INTEGER" property="id" />
-    <result column="describe" jdbcType="VARCHAR" property="describe" />
-    <result column="command" jdbcType="VARCHAR" property="command" />
-    <result column="request" jdbcType="VARCHAR" property="request" />
-    <result column="response" jdbcType="VARCHAR" property="response" />
-    <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
-    <result column="update_user" jdbcType="VARCHAR" property="updateUser" />
+    <result column="s_id" jdbcType="INTEGER" property="sId" />
+    <result column="s_command" jdbcType="VARCHAR" property="sCommand" />
+    <result column="s_request" jdbcType="VARCHAR" property="sRequest" />
+    <result column="s_response" jdbcType="VARCHAR" property="sResponse" />
+    <result column="s_describe" jdbcType="VARCHAR" property="sDescribe" />
+    <result column="s_update_time" jdbcType="TIMESTAMP" property="sUpdateTime" />
+    <result column="s_update_user" jdbcType="VARCHAR" property="sUpdateUser" />
+    <result column="s_status" jdbcType="INTEGER" property="sStatus" />
   </resultMap>
   <sql id="Example_Where_Clause">
     <where>
@@ -69,7 +70,8 @@
     </where>
   </sql>
   <sql id="Base_Column_List">
-    id, describe, command, request, response, update_time, update_user
+    s_id, s_command, s_request, s_response, s_describe, s_update_time, s_update_user, 
+    s_status
   </sql>
   <select id="selectByExample" parameterType="sino.gmn.entity.Sjl22ApiCommandExample" resultMap="BaseResultMap">
     select
@@ -92,59 +94,65 @@
     </if>
   </delete>
   <insert id="insert" parameterType="sino.gmn.entity.Sjl22ApiCommand">
-    insert into sjl22_api_command (id, describe, command, 
-      request, response, update_time, 
-      update_user)
-    values (#{id,jdbcType=INTEGER}, #{describe,jdbcType=VARCHAR}, #{command,jdbcType=VARCHAR}, 
-      #{request,jdbcType=VARCHAR}, #{response,jdbcType=VARCHAR}, #{updateTime,jdbcType=TIMESTAMP}, 
-      #{updateUser,jdbcType=VARCHAR})
+    insert into sjl22_api_command (s_id, s_command, s_request, 
+      s_response, s_describe, s_update_time, 
+      s_update_user, s_status)
+    values (#{sId,jdbcType=INTEGER}, #{sCommand,jdbcType=VARCHAR}, #{sRequest,jdbcType=VARCHAR}, 
+      #{sResponse,jdbcType=VARCHAR}, #{sDescribe,jdbcType=VARCHAR}, #{sUpdateTime,jdbcType=TIMESTAMP}, 
+      #{sUpdateUser,jdbcType=VARCHAR}, #{sStatus,jdbcType=INTEGER})
   </insert>
   <insert id="insertSelective" parameterType="sino.gmn.entity.Sjl22ApiCommand">
     insert into sjl22_api_command
     <trim prefix="(" suffix=")" suffixOverrides=",">
-      <if test="id != null">
-        id,
+      <if test="sId != null">
+        s_id,
       </if>
-      <if test="describe != null">
-        describe,
+      <if test="sCommand != null">
+        s_command,
       </if>
-      <if test="command != null">
-        command,
+      <if test="sRequest != null">
+        s_request,
       </if>
-      <if test="request != null">
-        request,
+      <if test="sResponse != null">
+        s_response,
       </if>
-      <if test="response != null">
-        response,
+      <if test="sDescribe != null">
+        s_describe,
       </if>
-      <if test="updateTime != null">
-        update_time,
+      <if test="sUpdateTime != null">
+        s_update_time,
       </if>
-      <if test="updateUser != null">
-        update_user,
+      <if test="sUpdateUser != null">
+        s_update_user,
+      </if>
+      <if test="sStatus != null">
+        s_status,
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
-      <if test="id != null">
-        #{id,jdbcType=INTEGER},
+      <if test="sId != null">
+        #{sId,jdbcType=INTEGER},
       </if>
-      <if test="describe != null">
-        #{describe,jdbcType=VARCHAR},
+      <if test="sCommand != null">
+        #{sCommand,jdbcType=VARCHAR},
       </if>
-      <if test="command != null">
-        #{command,jdbcType=VARCHAR},
+      <if test="sRequest != null">
+        #{sRequest,jdbcType=VARCHAR},
       </if>
-      <if test="request != null">
-        #{request,jdbcType=VARCHAR},
+      <if test="sResponse != null">
+        #{sResponse,jdbcType=VARCHAR},
       </if>
-      <if test="response != null">
-        #{response,jdbcType=VARCHAR},
+      <if test="sDescribe != null">
+        #{sDescribe,jdbcType=VARCHAR},
       </if>
-      <if test="updateTime != null">
-        #{updateTime,jdbcType=TIMESTAMP},
+      <if test="sUpdateTime != null">
+        #{sUpdateTime,jdbcType=TIMESTAMP},
       </if>
-      <if test="updateUser != null">
-        #{updateUser,jdbcType=VARCHAR},
+      <if test="sUpdateUser != null">
+        #{sUpdateUser,jdbcType=VARCHAR},
+      </if>
+      <if test="sStatus != null">
+        #{sStatus,jdbcType=INTEGER},
       </if>
     </trim>
   </insert>
@@ -157,26 +165,29 @@
   <update id="updateByExampleSelective" parameterType="map">
     update sjl22_api_command
     <set>
-      <if test="record.id != null">
-        id = #{record.id,jdbcType=INTEGER},
+      <if test="record.sId != null">
+        s_id = #{record.sId,jdbcType=INTEGER},
       </if>
-      <if test="record.describe != null">
-        describe = #{record.describe,jdbcType=VARCHAR},
+      <if test="record.sCommand != null">
+        s_command = #{record.sCommand,jdbcType=VARCHAR},
       </if>
-      <if test="record.command != null">
-        command = #{record.command,jdbcType=VARCHAR},
+      <if test="record.sRequest != null">
+        s_request = #{record.sRequest,jdbcType=VARCHAR},
       </if>
-      <if test="record.request != null">
-        request = #{record.request,jdbcType=VARCHAR},
+      <if test="record.sResponse != null">
+        s_response = #{record.sResponse,jdbcType=VARCHAR},
       </if>
-      <if test="record.response != null">
-        response = #{record.response,jdbcType=VARCHAR},
+      <if test="record.sDescribe != null">
+        s_describe = #{record.sDescribe,jdbcType=VARCHAR},
       </if>
-      <if test="record.updateTime != null">
-        update_time = #{record.updateTime,jdbcType=TIMESTAMP},
+      <if test="record.sUpdateTime != null">
+        s_update_time = #{record.sUpdateTime,jdbcType=TIMESTAMP},
       </if>
-      <if test="record.updateUser != null">
-        update_user = #{record.updateUser,jdbcType=VARCHAR},
+      <if test="record.sUpdateUser != null">
+        s_update_user = #{record.sUpdateUser,jdbcType=VARCHAR},
+      </if>
+      <if test="record.sStatus != null">
+        s_status = #{record.sStatus,jdbcType=INTEGER},
       </if>
     </set>
     <if test="_parameter != null">
@@ -185,15 +196,64 @@
   </update>
   <update id="updateByExample" parameterType="map">
     update sjl22_api_command
-    set id = #{record.id,jdbcType=INTEGER},
-      describe = #{record.describe,jdbcType=VARCHAR},
-      command = #{record.command,jdbcType=VARCHAR},
-      request = #{record.request,jdbcType=VARCHAR},
-      response = #{record.response,jdbcType=VARCHAR},
-      update_time = #{record.updateTime,jdbcType=TIMESTAMP},
-      update_user = #{record.updateUser,jdbcType=VARCHAR}
+    set s_id = #{record.sId,jdbcType=INTEGER},
+      s_command = #{record.sCommand,jdbcType=VARCHAR},
+      s_request = #{record.sRequest,jdbcType=VARCHAR},
+      s_response = #{record.sResponse,jdbcType=VARCHAR},
+      s_describe = #{record.sDescribe,jdbcType=VARCHAR},
+      s_update_time = #{record.sUpdateTime,jdbcType=TIMESTAMP},
+      s_update_user = #{record.sUpdateUser,jdbcType=VARCHAR},
+      s_status = #{record.sStatus,jdbcType=INTEGER}
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
     </if>
   </update>
+  
+  <!-- manual -->
+  <select id="selectSj" parameterType="int" resultMap="BaseResultMap">
+  	SELECT s_id,s_command,s_request,s_response,s_describe,s_update_time,s_update_user,s_status FROM sjl22_api_command WHERE s_id=#{id}
+  </select>
+  
+  <select id="selectAllSj" resultMap="BaseResultMap">
+  	SELECT s_id,s_command,s_request,s_response,s_describe,s_update_time,s_update_user,s_status FROM `sjl22_api_command` WHERE s_status=1
+  </select>
+  
+  <select id="getCount" resultType="int">
+  	SELECT COUNT(s_id) FROM `sjl22_api_command` WHERE s_status=1
+  </select>
+  
+  <select id="selectSjRecord" parameterType="int" resultMap="BaseResultMap">
+	SELECT s_id,s_command,s_request,s_response,s_describe,s_update_time,s_update_user,s_status FROM sjl22_api_command WHERE s_status=1 LIMIT #{first},#{last};
+  </select>
+  
+  <select id="selectSjRecordParam" parameterType="Map" resultMap="BaseResultMap">
+	SELECT s_id,s_command,s_request,s_response,s_describe,s_update_time,s_update_user,s_status FROM sjl22_api_command WHERE s_status=1 
+	<if test="null != s_id">
+		and s_id=#{s_id} 
+	</if>
+		<if test="null != s_command">
+		and s_command=#{s_command} 
+	</if>
+		<if test="null != s_update_user">
+		and s_update_user=#{s_update_user} 
+	</if>
+	LIMIT #{first},#{last};
+  </select>
+  
+  <select id="getCountParam" parameterType="Map" resultType="int">
+	SELECT COUNT(s_id) FROM `sjl22_api_command` WHERE s_status=1 
+	<if test="null != s_id">
+		and s_id=#{s_id} 
+	</if>
+		<if test="null != s_command">
+		and s_command=#{s_command} 
+	</if>
+		<if test="null != s_update_user">
+		and s_update_user=#{s_update_user} 
+	</if>
+  </select>
+  
+  
 </mapper>
+
+

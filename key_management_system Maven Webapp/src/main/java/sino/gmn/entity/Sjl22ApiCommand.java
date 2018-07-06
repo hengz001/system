@@ -3,73 +3,90 @@ package sino.gmn.entity;
 import java.util.Date;
 
 public class Sjl22ApiCommand {
-    private Integer id;
+    private Integer sId;
 
-    private String describe;
+    private String sCommand;
 
-    private String command;
+    private String sRequest;
 
-    private String request;
+    private String sResponse;
 
-    private String response;
+    private String sDescribe;
 
-    private Date updateTime;
+    private Date sUpdateTime;
 
-    private String updateUser;
+    private String sUpdateUser;
 
-    public Integer getId() {
-        return id;
+    private Integer sStatus;
+
+    public Integer getsId() {
+        return sId;
     }
 
-    public void setId(Integer id) {
-        this.id = id;
+    public void setsId(Integer sId) {
+        this.sId = sId;
     }
 
-    public String getDescribe() {
-        return describe;
+    public String getsCommand() {
+        return sCommand;
     }
 
-    public void setDescribe(String describe) {
-        this.describe = describe == null ? null : describe.trim();
+    public void setsCommand(String sCommand) {
+        this.sCommand = sCommand == null ? null : sCommand.trim();
     }
 
-    public String getCommand() {
-        return command;
+    public String getsRequest() {
+        return sRequest;
     }
 
-    public void setCommand(String command) {
-        this.command = command == null ? null : command.trim();
+    public void setsRequest(String sRequest) {
+        this.sRequest = sRequest == null ? null : sRequest.trim();
     }
 
-    public String getRequest() {
-        return request;
+    public String getsResponse() {
+        return sResponse;
     }
 
-    public void setRequest(String request) {
-        this.request = request == null ? null : request.trim();
+    public void setsResponse(String sResponse) {
+        this.sResponse = sResponse == null ? null : sResponse.trim();
     }
 
-    public String getResponse() {
-        return response;
+    public String getsDescribe() {
+        return sDescribe;
     }
 
-    public void setResponse(String response) {
-        this.response = response == null ? null : response.trim();
+    public void setsDescribe(String sDescribe) {
+        this.sDescribe = sDescribe == null ? null : sDescribe.trim();
     }
 
-    public Date getUpdateTime() {
-        return updateTime;
+    public Date getsUpdateTime() {
+        return sUpdateTime;
     }
 
-    public void setUpdateTime(Date updateTime) {
-        this.updateTime = updateTime;
+    public void setsUpdateTime(Date sUpdateTime) {
+        this.sUpdateTime = sUpdateTime;
     }
 
-    public String getUpdateUser() {
-        return updateUser;
+    public String getsUpdateUser() {
+        return sUpdateUser;
     }
 
-    public void setUpdateUser(String updateUser) {
-        this.updateUser = updateUser == null ? null : updateUser.trim();
+    public void setsUpdateUser(String sUpdateUser) {
+        this.sUpdateUser = sUpdateUser == null ? null : sUpdateUser.trim();
     }
+
+    public Integer getsStatus() {
+        return sStatus;
+    }
+
+    public void setsStatus(Integer sStatus) {
+        this.sStatus = sStatus;
+    }
+
+	@Override
+	public String toString() {
+		return "Sjl22ApiCommand [sId=" + sId + ", sCommand=" + sCommand + ", sRequest=" + sRequest + ", sResponse="
+				+ sResponse + ", sDescribe=" + sDescribe + ", sUpdateTime=" + sUpdateTime + ", sUpdateUser="
+				+ sUpdateUser + ", sStatus=" + sStatus + "]";
+	}
 }
