@@ -100,4 +100,14 @@ public class Sjl22ApiCommandController {
 		
 		return "sjl22/showSjl22";
 	}
+	
+	@RequestMapping("/uploadFile")
+	public String uploadFile(){
+		return "sjl22/uploadFile";
+	}
+	
+	@RequestMapping("/downloadFile")
+	public String downloadFile(){
+		return "sjl22/downloadFile";
+	}
 }

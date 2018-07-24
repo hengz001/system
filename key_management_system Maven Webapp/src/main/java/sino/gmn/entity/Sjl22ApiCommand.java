@@ -1,9 +1,13 @@
 package sino.gmn.entity;
 
+import java.io.Serializable;
 import java.util.Date;
 
-public class Sjl22ApiCommand {
-    private Integer sId;
+public class Sjl22ApiCommand implements Serializable{
+	
+	private static final long serialVersionUID = 9049469375508638053L;
+
+	private Integer sId;
 
     private String sCommand;
 

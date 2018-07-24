@@ -1,7 +1,13 @@
 package sino.gmn.entity;
 
-public class PageUtil {
-    private int totalCount;//总数
+import java.io.Serializable;
+
+public class PageUtil implements Serializable{
+	
+	
+	private static final long serialVersionUID = -5477593364468284118L;
+	
+	private int totalCount;//总数
     private int pageSize;//每页显示数量
     private int currpageNum;//当前页
     private int pageCount;//总页数

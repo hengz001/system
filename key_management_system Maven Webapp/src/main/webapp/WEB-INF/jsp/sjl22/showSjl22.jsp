@@ -1,27 +1,11 @@
 <%@ page language="java" import="java.util.*" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
-<%
-	String path = request.getContextPath();
-	String basePath = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort()
-			+ path + "/";
-%>
+
 <html lang="zh-CN">
 <head>
-<meta charset="utf-8">
-<meta http-equiv="X-UA-Compatible" content="IE=edge">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<!-- 上述3个meta标签*必须*放在最前面，任何其他内容都*必须*跟随其后！ -->
-<!-- <title>Key Management Syste 1.0</title> -->
+<jsp:include page="../common/common.jsp"></jsp:include>
 <title>KMS1.0</title>
-<!-- Bootstrap -->
-<link href="<%=basePath%>bootstrap-3.3.7/css/bootstrap.css"
-	rel="stylesheet">
-<!-- jQuery (Bootstrap 的所有 JavaScript 插件都依赖 jQuery，所以必须放在前边) -->
-<script src="https://cdn.bootcss.com/jquery/1.12.4/jquery.min.js"></script>
-<!-- 加载 Bootstrap 的所有 JavaScript 插件。你也可以根据需要只加载单个插件。 -->
-<script src="<%=basePath%>bootstrap-3.3.7/js/bootstrap.js"></script>
-
 <script type="text/javascript">
 	<!-- 
 	/*
@@ -45,7 +29,7 @@
 	 		var paramType = $("#selectType").val();
 	 		var parameter = $("#parameter").val();
 	 			
-	 		var url = "<%=basePath%>sjl22/findPage.action?"
+	 		var url = "${pageContext.request.contextPath}/sjl22/findPage.action?"
 				+"currpageNum="+i+
 				"&pageSize="+pageSize;	
 				
@@ -58,28 +42,17 @@
 	
 </script>
 </head>
+
 <body>
-	<ul class="nav nav-tabs">
-		<li role="presentation"><a href="<%=basePath%>">添加</a></li>
-		<li role="presentation" class="active"><a href="#">查询</a></li>
-		<li role="presentation"><a href="<%=basePath%>sjl22/file.action">读取文件</a></li>
-	</ul>
+	<jsp:include page="../common/title.jsp"></jsp:include>	
 
 	<nav aria-label="Page navigation">
 		<ul class="pagination">
-			<li><a aria-label="Previous" <c:if test="${page.hasPrePage}"> onclick="page(${page.prePage});"</c:if> >
+			<li>
+			<a aria-label="Previous" <c:if test="${page.hasPrePage}"> onclick="page(${page.prePage});"</c:if> >
 					<span aria-hidden="true">&laquo;</span>
-			</a></li>
-
-			<!--  
-			<c:forEach var="i" begin="1" end="${page.pageCount}">
-				<li
-					<c:if test="${i == page.currpageNum}">
-						class="active"
-					</c:if>><a
-					onclick="page(${i});">${i}</a></li>
-			</c:forEach>
-			-->
+			</a>
+			</li>
 
 			<c:forEach var="i" begin="1" end="${page.pageCount}">
 				<c:if test="${page.currpageNum-i<5 && i< page.currpageNum + 5}">
@@ -99,19 +72,79 @@
 	</nav>
 
 	总计${page.totalCount!=null?page.totalCount:0}行 &nbsp;&nbsp;
-	
+
+	<!-- 
 	<select id="select1" name="select1" onchange="page(1);"> 
-		<option value="1" <c:if test="${page.pageSize==1}"> selected</c:if> />1行
-		<option value="3" <c:if test="${page.pageSize==3}"> selected</c:if> />3行
-		<option value="10" <c:if test="${page.pageSize==10}"> selected</c:if> />10行
-		<option value="100" <c:if test="${page.pageSize==100}"> selected</c:if> />100行
+		<option value="1" <c:if test="${page.pageSize==1}"> selected</c:if> >1行</option>
+		<option value="3" <c:if test="${page.pageSize==3}"> selected</c:if> >3行</option>
+		<option value="10" <c:if test="${page.pageSize==10}"> selected</c:if> >10行</option>
+		<option value="100" <c:if test="${page.pageSize==100}"> selected</c:if> >100行</option>
+	</select>
+	 -->	
+	<select id="select1" name="select1" onchange="page(1);"> 
+		<c:choose>
+			<c:when test="${page.pageSize==1}">
+				<option value="1" selected>1行</option>
+			</c:when>
+			<c:otherwise>
+				<option value="1">1行</option>
+			</c:otherwise>
+		</c:choose>
+		<c:choose>
+			<c:when test="${page.pageSize==3}">
+				<option value="3" selected>3行</option>
+			</c:when>
+			<c:otherwise>
+				<option value="1">3行</option>
+			</c:otherwise>
+		</c:choose>
+		<c:choose>
+			<c:when test="${page.pageSize==10}">
+				<option value="10" selected>10行</option>
+			</c:when>
+			<c:otherwise>
+				<option value="10">10行</option>
+			</c:otherwise>
+		</c:choose>
+		<c:choose>
+			<c:when test="${page.pageSize==100}">
+				<option value="100" selected>100行</option>
+			</c:when>
+			<c:otherwise>
+				<option value="100">100行</option>
+			</c:otherwise>
+		</c:choose>
 	</select>
 
+	<!-- 
 	 <select id="selectType" name="selectType">
 	 	<option/>请选择
 	 	<option value="s_command" <c:if test="${'s_command'.equals(paramType)}"> selected</c:if> />命令
 	 	<option value="s_update_user" <c:if test="${'s_update_user'.equals(paramType)}"> selected</c:if> />操作用户
 	 </select>
+	 -->
+	 <select id="selectType" name="selectType">
+	 	<option>请选择</option>
+ 		<c:choose>
+			<c:when test="${'s_command' eq paramType}">
+				<option value="s_command" selected>命令</option>			
+			</c:when>
+			<c:otherwise>
+				<option value="s_command">命令</option>
+			</c:otherwise>
+		</c:choose>
+		
+		<c:choose>
+			<c:when test="${'s_update_user'eq paramType}">
+			 	<option value="s_update_user" selected>操作用户</option>
+			</c:when>
+			<c:otherwise>
+			 	<option value="s_update_user">操作用户</option>
+			</c:otherwise>
+		</c:choose>
+	 </select>
+	 
+	 
 	 <input type="text" id="parameter" name="parameter" value="${parameter}"/>
 	 <input type="button" value="搜索" onclick="page(1);">
 			
