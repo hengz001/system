@@ -1,6 +1,8 @@
 package sino.gmn.controller;
 
+import java.io.File;
 import java.io.IOException;
+import java.util.Date;
 import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -109,5 +111,29 @@ public class Sjl22ApiCommandController {
 	@RequestMapping("/downloadFile")
 	public String downloadFile(){
 		return "sjl22/downloadFile";
+	}
+	
+	@RequestMapping("/uploadFileAction")
+	public String uploadFileAction(HttpServletRequest request, @RequestParam("file1") MultipartFile file1){
+		String message;
+		String path;
+		
+		message = "successfully.";
+		
+		path = request.getSession().getServletContext().getRealPath("/");
+		path += "\\download\\";
+		path += new Date().getTime()+"_";
+		path += file1.getOriginalFilename();
+		
+		try {
+			File file = new File(path);
+			file1.transferTo(file);
+		} catch (Exception e) {
+			message = "ERROR!";
+			e.printStackTrace();
+		}
+		
+		request.setAttribute("message", message);
+		return "sjl22/message";
 	}
 }

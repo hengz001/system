@@ -5,7 +5,7 @@
 <html lang="zh-CN">
 <head>
 <jsp:include page="../common/common.jsp"></jsp:include>
-<title>KMS1.0</title>
+<title>命令详情</title>
 <script type="text/javascript">
 	<!-- 
 	/*

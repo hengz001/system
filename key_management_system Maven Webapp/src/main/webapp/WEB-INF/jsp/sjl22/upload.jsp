@@ -3,13 +3,13 @@
 <html lang="zh-CN">
 <head>
 	<jsp:include page="../common/common.jsp"></jsp:include>
-	<title>KMS1.0</title>
+	<title>批量添加</title>
 </head>
 
 <body>
 	<jsp:include page="../common/title.jsp"></jsp:include>	
 
-	<h1>Hello GMN.</h1>
+	<h1>批量写入命令</h1>
 <body>
 	<form
 		action="${pageContext.request.contextPath}/sjl22/upload.action" enctype="multipart/form-data" method="post">

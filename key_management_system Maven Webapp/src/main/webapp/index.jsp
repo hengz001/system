@@ -3,7 +3,7 @@
 <html lang="zh-CN">
 <head>
 	<jsp:include page="WEB-INF/jsp/common/common.jsp"></jsp:include>
-	<title>KMS1.0</title>
+	<title>添加命令</title>
 </head>
 <body>
 

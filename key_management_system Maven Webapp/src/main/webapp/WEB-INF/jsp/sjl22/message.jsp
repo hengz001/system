@@ -3,7 +3,7 @@
 <html lang="zh-CN">
 <head>
 <jsp:include page="../common/common.jsp"></jsp:include>
-<title>KMS1.0</title>
+<title>确认信息</title>
 </head>
 
 <body>

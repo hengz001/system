@@ -1,15 +1,22 @@
 <%@ page language="java" import="java.util.*" pageEncoding="UTF-8"%>
 
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
-<html>
+<html lang="zh-CN">
 <head>
 	<jsp:include page="../common/common.jsp"></jsp:include>
-	<title>KMS1.0</title>
+	<title>文件上传</title>
 </head>
 
-  
-  <body>
-  	<jsp:include page="../common/title.jsp"></jsp:include>	
-    This is my JSP page. <br>
-  </body>
+<body>
+	<jsp:include page="../common/title.jsp"></jsp:include>	
+
+	<h1>请选择需要上传的文件.</h1>
+<body>
+	<form
+		action="${pageContext.request.contextPath}/sjl22/uploadFileAction.action" enctype="multipart/form-data" method="post">
+		上传文件：<input type="file" name="file1" id="file1"><br /> 
+		<input type="submit" value="提交" onclick="showdiv('上传中请等待 。。。')">
+	</form>
+</body>
+
+</body>
 </html>

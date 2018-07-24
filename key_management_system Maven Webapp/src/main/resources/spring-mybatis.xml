@@ -40,8 +40,8 @@
 		<property name="dataSource" ref="dataSource" />
 		<!-- 自动扫描mapping.xml文件 -->
 		<property name="mapperLocations" value="classpath:sino/gmn/dao/xml/*.xml"></property>
-		<!-- 显示SQL语句
 		<property name="configLocation" value="classpath:mybatis-config.xml"></property>
+		<!-- 显示SQL语句
 		 -->
 	</bean>
 
