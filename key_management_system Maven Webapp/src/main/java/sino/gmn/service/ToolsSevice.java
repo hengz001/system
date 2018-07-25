@@ -6,6 +6,11 @@ import java.io.PrintStream;
 import java.io.UnsupportedEncodingException;
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import org.springframework.web.multipart.MultipartFile;
+
 public interface ToolsSevice {
 
 	public int operationStream(InputStream in , List<String> key, List<String> value) throws IOException ;
@@ -21,4 +26,12 @@ public interface ToolsSevice {
 	public int hexDumpBuffer(PrintStream out,byte[] bs, int len, int lineLen ) throws UnsupportedEncodingException;
 	
 	public int hexDumpOneLine(byte[] bs, int len, int lineLen, int line) throws UnsupportedEncodingException;
+
+	public int uploadFile(HttpServletRequest request,MultipartFile file1);
+	
+	public String getDownloadPath(HttpServletRequest request);
+	
+	public String[] getFiles(HttpServletRequest request);
+	
+	public int  downloadFileAction(HttpServletRequest request, HttpServletResponse  response, String fileName);
 }

@@ -1,8 +1,6 @@
 package sino.gmn.controller;
 
-import java.io.File;
 import java.io.IOException;
-import java.util.Date;
 import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -14,6 +12,7 @@ import org.springframework.web.multipart.MultipartFile;
 import sino.gmn.entity.PageUtil;
 import sino.gmn.entity.Sjl22ApiCommand;
 import sino.gmn.service.Sjl22ApiCommandService;
+import sino.gmn.service.ToolsSevice;
 
 @Controller
 @RequestMapping("/sjl22")
@@ -21,6 +20,9 @@ public class Sjl22ApiCommandController {
 
 	@Autowired
 	Sjl22ApiCommandService sjl22Service;
+	
+	@Autowired
+	ToolsSevice toolsService;
 	
 	@RequestMapping("/add")
 	public String add(HttpServletRequest requuest, Sjl22ApiCommand obj){
@@ -109,31 +111,25 @@ public class Sjl22ApiCommandController {
 	}
 	
 	@RequestMapping("/downloadFile")
-	public String downloadFile(){
+	public String downloadFile(HttpServletRequest request){
+		request.setAttribute("fileNames", toolsService.getFiles(request));
 		return "sjl22/downloadFile";
 	}
 	
 	@RequestMapping("/uploadFileAction")
 	public String uploadFileAction(HttpServletRequest request, @RequestParam("file1") MultipartFile file1){
-		String message;
-		String path;
+		String message = "ERROR!";
 		
-		message = "successfully.";
-		
-		path = request.getSession().getServletContext().getRealPath("/");
-		path += "\\download\\";
-		path += new Date().getTime()+"_";
-		path += file1.getOriginalFilename();
-		
-		try {
-			File file = new File(path);
-			file1.transferTo(file);
-		} catch (Exception e) {
-			message = "ERROR!";
-			e.printStackTrace();
+		if(toolsService.uploadFile(request, file1)>0){
+			message = "successfully.";
 		}
 		
 		request.setAttribute("message", message);
 		return "sjl22/message";
+	}
+	
+	@RequestMapping("/downloadFileAction")
+	public void downloadFileAction(HttpServletRequest request,HttpServletResponse  response, String fileName){
+		toolsService.downloadFileAction(request, response, fileName);
 	}
 }

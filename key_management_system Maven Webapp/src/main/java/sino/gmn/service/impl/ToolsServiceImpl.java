@@ -1,5 +1,7 @@
 package sino.gmn.service.impl;
 
+import java.io.BufferedInputStream;
+import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -8,8 +10,17 @@ import java.io.InputStream;
 import java.io.PrintStream;
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+
+import javax.servlet.ServletContext;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
+
 import sino.gmn.service.ToolsSevice;
 
 @Service("ToolsSevice")
@@ -166,4 +177,85 @@ public class ToolsServiceImpl implements ToolsSevice {
 		System.out.println(" ]");
 		return 0;
 	}
+	
+	public int uploadFile(HttpServletRequest request,MultipartFile file1){
+		int rc = 1;
+		String path;
+		
+		try {
+			path = getDownloadPath(request);
+			path += new Date().getTime()+"_";
+			path += file1.getOriginalFilename();
+			
+			File file = new File(path);
+			file1.transferTo(file);
+			
+		} catch (Exception e) {
+			rc = 0;
+			e.printStackTrace();
+		}
+		return rc;
+	}
+	
+	public String getDownloadPath(HttpServletRequest request){
+		String path;
+		path = request.getSession().getServletContext().getRealPath("/")+"/download/";
+		File dir = new File(path);
+		if(!dir.exists()){
+			dir.mkdir();
+		}
+		return path;
+	}
+	
+	public String[] getFiles(HttpServletRequest request){
+		String path;
+		File file;
+		File files[];
+		String fileNames[];
+		
+		path = getDownloadPath(request);
+		file = new File(path);
+		files = file.listFiles();
+		fileNames = new String[files.length];
+		
+		for(int i=0; i<files.length; i++){
+			fileNames[i] = files[i].getName();
+		}
+		
+		return fileNames;
+	}
+	
+	public int  downloadFileAction(HttpServletRequest request, HttpServletResponse  response, String fileName){
+		int rc = 0;
+
+		int len = 0;
+		File file;
+		String path;
+		byte buf[] = new byte[2048];
+		BufferedInputStream in = null;
+		BufferedOutputStream out = null;
+		
+		path= getDownloadPath(request)+fileName;
+		file= new File(path);
+		response.reset();
+		response.setHeader("Content-Disposition", "attchment;filename="+fileName);
+		response.setContentType("multipart/form-data");
+		
+		try {
+			in = new BufferedInputStream(new FileInputStream(file));
+			out = new BufferedOutputStream(response.getOutputStream());
+			while((len = in.read(buf,0,buf.length))!=-1){
+				out.write(buf,0,len);
+				out.flush();
+			}
+			rc = 1;
+			out.close();
+			in.close();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	
+		return rc;
+	}
+	
 }

@@ -3,7 +3,6 @@
 <html>
 <head>
 	<jsp:include page="../common/common.jsp"></jsp:include>
-	<title>KMS1.0</title>
 </head>
 
 	<ul class="nav nav-tabs">
