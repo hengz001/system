@@ -8,14 +8,19 @@
 
 <body>
 	<jsp:include page="../common/title.jsp"></jsp:include>	
-
-	<h1>批量写入命令</h1>
 <body>
-	<form
-		action="${pageContext.request.contextPath}/sjl22/upload.action" enctype="multipart/form-data" method="post">
-		上传用户：<input type="text" name="username"><br /> 
-		上传文件：<input type="file" name="file1" id="file1"><br /> 
-		<input type="submit" value="提交">
+	<form action="${pageContext.request.contextPath}/sjl22/upload.action" enctype="multipart/form-data" method="post" class="form-inline">
+		<div class="form-group">
+		<label>上传用户</label>：
+		<input type="text" name="username" class="form-control" placeholder="批量写入命令"><br /> 
+		</div>
+		<div class="form-group">
+		<label>上传文件</label>
+		<input type="file" name="file1" id="file1" class="form-control"><br /> 
+		</div>
+		<div class="form-group">
+		<input type="submit" value="提交" class="form-control">
+		</div>
 	</form>
 </body>
 

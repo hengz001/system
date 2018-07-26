@@ -45,7 +45,7 @@
 
 <body>
 	<jsp:include page="../common/title.jsp"></jsp:include>	
-
+	
 	<nav aria-label="Page navigation">
 		<ul class="pagination">
 			<li>
@@ -71,121 +71,116 @@
 		</ul>
 	</nav>
 
-	总计${page.totalCount!=null?page.totalCount:0}行 &nbsp;&nbsp;
+	<form class="form-inline">
+		<label>count: ${page.totalCount!=null?page.totalCount:0} &nbsp;  </label>
+
+		<select id="select1" name="select1" onchange="page(1);" class="form-control"> 
+			<c:choose>
+				<c:when test="${page.pageSize==1}">
+					<option value="1" selected>1行</option>
+				</c:when>
+				<c:otherwise>
+					<option value="1">1行</option>
+				</c:otherwise>
+			</c:choose>
+			<c:choose>
+				<c:when test="${page.pageSize==3}">
+					<option value="3" selected>3行</option>
+				</c:when>
+				<c:otherwise>
+					<option value="1">3行</option>
+				</c:otherwise>
+			</c:choose>
+			<c:choose>
+				<c:when test="${page.pageSize==10}">
+					<option value="10" selected>10行</option>
+				</c:when>
+				<c:otherwise>
+					<option value="10">10行</option>
+				</c:otherwise>
+			</c:choose>
+			<c:choose>
+				<c:when test="${page.pageSize==100}">
+					<option value="100" selected>100行</option>
+				</c:when>
+				<c:otherwise>
+					<option value="100">100行</option>
+				</c:otherwise>
+			</c:choose>
+		</select>
+	
+		 <select id="selectType" name="selectType" class="form-control">
+		 	<option>请选择</option>
+	 		<c:choose>
+				<c:when test="${'s_command' eq paramType}">
+					<option value="s_command" selected>命令</option>			
+				</c:when>
+				<c:otherwise>
+					<option value="s_command">命令</option>
+				</c:otherwise>
+			</c:choose>
+			
+			<c:choose>
+				<c:when test="${'s_update_user'eq paramType}">
+				 	<option value="s_update_user" selected>操作用户</option>
+				</c:when>
+				<c:otherwise>
+				 	<option value="s_update_user">操作用户</option>
+				</c:otherwise>
+			</c:choose>
+		 </select>
+	 
+		<div class="form-group">
+			<input type="text" id="parameter" name="parameter" value="${parameter}" class="form-control">
+		</div>
+		<button onclick="page(1);" type="button" class="btn btn-default">
+		  <span>搜索</span>
+		</button>
+	</form>
 
 	<!-- 
-	<select id="select1" name="select1" onchange="page(1);"> 
-		<option value="1" <c:if test="${page.pageSize==1}"> selected</c:if> >1行</option>
-		<option value="3" <c:if test="${page.pageSize==3}"> selected</c:if> >3行</option>
-		<option value="10" <c:if test="${page.pageSize==10}"> selected</c:if> >10行</option>
-		<option value="100" <c:if test="${page.pageSize==100}"> selected</c:if> >100行</option>
-	</select>
-	 -->	
-	<select id="select1" name="select1" onchange="page(1);"> 
-		<c:choose>
-			<c:when test="${page.pageSize==1}">
-				<option value="1" selected>1行</option>
-			</c:when>
-			<c:otherwise>
-				<option value="1">1行</option>
-			</c:otherwise>
-		</c:choose>
-		<c:choose>
-			<c:when test="${page.pageSize==3}">
-				<option value="3" selected>3行</option>
-			</c:when>
-			<c:otherwise>
-				<option value="1">3行</option>
-			</c:otherwise>
-		</c:choose>
-		<c:choose>
-			<c:when test="${page.pageSize==10}">
-				<option value="10" selected>10行</option>
-			</c:when>
-			<c:otherwise>
-				<option value="10">10行</option>
-			</c:otherwise>
-		</c:choose>
-		<c:choose>
-			<c:when test="${page.pageSize==100}">
-				<option value="100" selected>100行</option>
-			</c:when>
-			<c:otherwise>
-				<option value="100">100行</option>
-			</c:otherwise>
-		</c:choose>
-	</select>
-
-	<!-- 
-	 <select id="selectType" name="selectType">
-	 	<option/>请选择
-	 	<option value="s_command" <c:if test="${'s_command'.equals(paramType)}"> selected</c:if> />命令
-	 	<option value="s_update_user" <c:if test="${'s_update_user'.equals(paramType)}"> selected</c:if> />操作用户
-	 </select>
-	 -->
-	 <select id="selectType" name="selectType">
-	 	<option>请选择</option>
- 		<c:choose>
-			<c:when test="${'s_command' eq paramType}">
-				<option value="s_command" selected>命令</option>			
-			</c:when>
-			<c:otherwise>
-				<option value="s_command">命令</option>
-			</c:otherwise>
-		</c:choose>
-		
-		<c:choose>
-			<c:when test="${'s_update_user'eq paramType}">
-			 	<option value="s_update_user" selected>操作用户</option>
-			</c:when>
-			<c:otherwise>
-			 	<option value="s_update_user">操作用户</option>
-			</c:otherwise>
-		</c:choose>
-	 </select>
-	 
-	 
 	 <input type="text" id="parameter" name="parameter" value="${parameter}"/>
 	 <input type="button" value="搜索" onclick="page(1);">
+	 -->
 			
 	<table
 		class="table table-striped table-bordered table-hover table-condensed"
 		style="TABLE-LAYOUT:fixed">
 		<thead>
-			<tr align="center">
+			<tr >
 				<td
 					style="width:5%;word-break:keep-all;white-space:nowrap;overflow:hidden;text-overflow:ellipsis"><h5>
 						<em><strong>*</strong></em>
-						</h1></td>
+						</h5></td>
 				<td
 					style="width:15%;word-break:keep-all;white-space:nowrap;overflow:hidden;text-overflow:ellipsis"><h5>
 						<em><strong>命令</strong></em>
-						</h1></td>
+						</h5></td>
 				<td
 					style="width:15%;word-break:keep-all;white-space:nowrap;overflow:hidden;text-overflow:ellipsis"><h5>
 						<em><strong>请求</strong></em>
-						</h1></td>
+						</h5></td>
 				<td
 					style="width:15%;word-break:keep-all;white-space:nowrap;overflow:hidden;text-overflow:ellipsis"><h5>
 						<em><strong>响应</strong></em>
-						</h1></td>
+						</h5></td>
 				<td
 					style="width:15%;word-break:keep-all;white-space:nowrap;overflow:hidden;text-overflow:ellipsis"><h5>
 						<em><strong>描述</strong></em>
-						</h1></td>
+						</h5></td>
 				<td
 					style="width:15%;word-break:keep-all;white-space:nowrap;overflow:hidden;text-overflow:ellipsis"><h5>
 						<em><strong>修改时间</strong></em>
-						</h1></td>
+						</h5></td>
 				<td
 					style="width:15%;word-break:keep-all;white-space:nowrap;overflow:hidden;text-overflow:ellipsis"><h5>
 						<em><strong>修改用户</strong></em>
-						</h1></td>
+						</h5></td>
 			</tr>
 		</thead>
 		<tbody id="tbody1">
 			<c:forEach items="${objs}" var="obj">
-				<tr align="center">
+				<tr >
 					<td
 						style="width:5%;word-break:keep-all;white-space:nowrap;overflow:hidden;text-overflow:ellipsis"
 						title="${obj.sId}"><small><small><em>${obj.sId}</em></small></small></td>

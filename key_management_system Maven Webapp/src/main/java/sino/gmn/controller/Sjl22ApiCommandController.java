@@ -24,32 +24,32 @@ public class Sjl22ApiCommandController {
 	@Autowired
 	ToolsSevice toolsService;
 	
+	List<Sjl22ApiCommand> objs;
+	
+	@RequestMapping("/home")
+	public String home(HttpServletRequest request, Sjl22ApiCommand obj){
+		request.setAttribute("flag","主页");
+		return "sjl22/home";
+	}
+	
+	@RequestMapping("/addData")
+	public String addData(HttpServletRequest request, Sjl22ApiCommand obj){
+		request.setAttribute("flag","添加");
+		return "sjl22/addData";
+	}
+	
 	@RequestMapping("/add")
-	public String add(HttpServletRequest requuest, Sjl22ApiCommand obj){
+	public String add(HttpServletRequest request, Sjl22ApiCommand obj){
 		sjl22Service.add(obj);
 		return "forward:show.action";
 	}
 	
-	List<Sjl22ApiCommand> objs;
-	
-	/*
-	private int totalCount;//总数
-    private int pageSize=10;//每页显示数量
-    private int currpageNum;//当前页
-    private int pageCount;//总页数
-    private int prePage;//上一页
-    private int nextPage;//下一页
-    private boolean hasPrePage;//是否有上一页
-    private boolean hasNextPage;//是否有下一页
-    private int firstPage;//第一页
-    private int lastPage;//最后一页
-    private int currentcount;//当前从第多少条数据开始显示
-	*/
 	@RequestMapping("/show")
 	public String show(HttpServletRequest request){
 		int currpageNum = 1;
 		int pageSize = 10;
 	
+		request.setAttribute("flag","查询");
 		PageUtil page = sjl22Service.getPage(pageSize, currpageNum);
 		if(null == page){
 			return "sjl22/showSjl22";
@@ -63,20 +63,19 @@ public class Sjl22ApiCommandController {
 	}
 	
 	@RequestMapping("/file")
-	public String uploadPage(){
+	public String uploadPage(HttpServletRequest request){
+		request.setAttribute("flag","读取");
 		return "sjl22/upload";
 	}
 	
 	@RequestMapping("/upload")
 	public String upload(HttpServletRequest request,String username, @RequestParam("file1") MultipartFile file1){
-		String message;
-		
-		message = "successfully.";
+		String message = "ERROR!";
 		
 		try {
 			sjl22Service.addAll(file1.getInputStream(),username);
+			message = "successfully.";
 		} catch (IOException e) {
-			message = "ERROR!";
 			e.printStackTrace();
 		}
 		
@@ -87,6 +86,7 @@ public class Sjl22ApiCommandController {
 	@RequestMapping("findPage")
 	public String findPage(HttpServletRequest request, HttpServletResponse response, PageUtil page,String paramType,String parameter){
 		
+		request.setAttribute("flag","查询");
 		page.setTotalCount(sjl22Service.getCountParam(paramType, parameter));
 		request.setAttribute("page", page);
 		
@@ -106,12 +106,14 @@ public class Sjl22ApiCommandController {
 	}
 	
 	@RequestMapping("/uploadFile")
-	public String uploadFile(){
+	public String uploadFile(HttpServletRequest request){
+		request.setAttribute("flag","上传");
 		return "sjl22/uploadFile";
 	}
 	
 	@RequestMapping("/downloadFile")
 	public String downloadFile(HttpServletRequest request){
+		request.setAttribute("flag","下载");
 		request.setAttribute("fileNames", toolsService.getFiles(request));
 		return "sjl22/downloadFile";
 	}

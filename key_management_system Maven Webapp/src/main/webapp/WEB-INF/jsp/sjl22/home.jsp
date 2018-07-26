@@ -3,7 +3,7 @@
 
 <html lang="zh-CN">
 	<head>
-		<jsp:include page="WEB-INF/jsp/common/common.jsp"></jsp:include>
+		<jsp:include page="../common/common.jsp"></jsp:include>
 		<title>主页</title>
 		<script type="text/javascript">
 
@@ -27,7 +27,7 @@
 	</head>
 
 	<body>
-		<jsp:include page="WEB-INF/jsp/common/title.jsp"></jsp:include>	
+		<jsp:include page="../common/title.jsp"></jsp:include>	
 		
 		<div class="progress">
 		  <div id="d1" class="progress-bar progress-bar-striped active" role="progressbar" aria-valuenow="45" aria-valuemin="0" aria-valuemax="100" style="width: 0%">
