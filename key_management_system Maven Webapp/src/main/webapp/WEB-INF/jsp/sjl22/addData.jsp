@@ -9,7 +9,7 @@
 
 	<jsp:include page="../common/title.jsp"></jsp:include>	
 
-	<form action="${pageContext.request.contextPath}/sjl22/add.action" method="post">
+	<form action="${pageContext.request.contextPath}/sjl22/add.action" method="post" class="">
 		<div class="form-group">
 			<label for="sRequest">命令</label> <input type="text"
 				class="form-control" id="sRequest" name="sRequest" placeholder="NC">
@@ -26,8 +26,8 @@
 			<label for="api_update_user">操作用户</label> <input type="text"
 				class="form-control" id="sUpdateUser" name="sUpdateUser" placeholder="hengz">
 		</div>
-		<p class="text-right">
-			<button type="submit" class="btn btn-default">提交</button>
+		<p class="text-center">
+			<button type="submit" class="btn btn-primary">提交</button>
 		</p>
 	</form>
 </body>

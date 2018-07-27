@@ -24,6 +24,9 @@
 				case "下载":
 					$("#li5").addClass("active");
 					break;
+				case "互动":
+					$("#li6").addClass("active");
+					break;
 				default:
 					$("#li0").addClass("active");
 					break;
@@ -58,6 +61,8 @@
 					<a href="${pageContext.request.contextPath}/sjl22/uploadFile.action">上传</a></li>
 				<li id="li5">
 					<a href="${pageContext.request.contextPath}/sjl22/downloadFile.action">下载</a></li>
+				<li id="li6">
+					<a href="${pageContext.request.contextPath}/sjl22/interactive.action">互动</a></li>
 			</ul>
 		</div>
 	</div>

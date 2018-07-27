@@ -1,14 +1,21 @@
 package sino.gmn.controller;
 
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
+
+import com.alibaba.fastjson.JSONObject;
+
 import sino.gmn.entity.PageUtil;
 import sino.gmn.entity.Sjl22ApiCommand;
 import sino.gmn.service.Sjl22ApiCommandService;
@@ -62,27 +69,6 @@ public class Sjl22ApiCommandController {
 		return "sjl22/showSjl22";
 	}
 	
-	@RequestMapping("/file")
-	public String uploadPage(HttpServletRequest request){
-		request.setAttribute("flag","读取");
-		return "sjl22/upload";
-	}
-	
-	@RequestMapping("/upload")
-	public String upload(HttpServletRequest request,String username, @RequestParam("file1") MultipartFile file1){
-		String message = "ERROR!";
-		
-		try {
-			sjl22Service.addAll(file1.getInputStream(),username);
-			message = "successfully.";
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-		
-		request.setAttribute("message", message);
-		return "sjl22/message";
-	}
-	
 	@RequestMapping("findPage")
 	public String findPage(HttpServletRequest request, HttpServletResponse response, PageUtil page,String paramType,String parameter){
 		
@@ -103,6 +89,28 @@ public class Sjl22ApiCommandController {
 		}
 		
 		return "sjl22/showSjl22";
+	}
+	
+	
+	@RequestMapping("/file")
+	public String uploadPage(HttpServletRequest request){
+		request.setAttribute("flag","读取");
+		return "sjl22/upload";
+	}
+	
+	@RequestMapping("/upload")
+	public String upload(HttpServletRequest request,String username, @RequestParam("file1") MultipartFile file1){
+		String message = "ERROR!";
+		
+		try {
+			sjl22Service.addAll(file1.getInputStream(),username);
+			message = "successfully.";
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		
+		request.setAttribute("message", message);
+		return "sjl22/message";
 	}
 	
 	@RequestMapping("/uploadFile")
@@ -133,5 +141,25 @@ public class Sjl22ApiCommandController {
 	@RequestMapping("/downloadFileAction")
 	public void downloadFileAction(HttpServletRequest request,HttpServletResponse  response, String fileName){
 		toolsService.downloadFileAction(request, response, fileName);
+	}
+	
+	@RequestMapping("interactive")
+	public String interactive(HttpServletRequest request){
+		request.setAttribute("flag", "互动");
+		return "sjl22/interactive";
+	}
+	
+	@RequestMapping("interactiveAction")
+	@ResponseBody
+	public String interactiveAction(HttpServletRequest request,String ip,String port,String inValue){
+		request.setAttribute("flag", "互动");
+		Map<String, Object> map = new HashMap<String, Object>();
+		
+		if(toolsService.operationHsm(ip, port, inValue,map)<=0){
+			map.put("recv", "HSM not connect");
+			map.put("recvHex", "HSM not connect");
+		}
+		
+		return  JSONObject.toJSON(map).toString();
 	}
 }

@@ -7,20 +7,20 @@ import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.OutputStream;
 import java.io.PrintStream;
 import java.io.UnsupportedEncodingException;
+import java.net.InetSocketAddress;
+import java.net.Socket;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
-import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
-
 import sino.gmn.service.ToolsSevice;
 
 @Service("ToolsSevice")
@@ -258,4 +258,198 @@ public class ToolsServiceImpl implements ToolsSevice {
 		return rc;
 	}
 	
+	public int operationHsm(String ip,String port,String inValue, Map<String, Object> map){
+		int rc = 0;
+		Socket fd;
+		byte[] inBuf;
+		int inLen;
+		byte[] outBuf;
+		int outLen;
+		
+		inBuf = getCmd(inValue);
+		inLen = inBuf.length;
+		outBuf = new byte[6000];
+		outLen = outBuf.length;
+		
+		if((fd=openSock(ip, port, 6000))==null){
+			return rc;
+		}
+		
+		if((rc = outLen = dataInteractive(fd, inBuf, inLen, outBuf, outLen)) <= 0){
+			return rc;
+		}
+		
+		byte outBufHex[] = new byte[outLen*2];
+		unPackBCD(outBuf, outBufHex, outBufHex.length);
+		
+		map.put("recv", new String(outBuf,2,outLen-2));
+		map.put("recvHex", new String(outBufHex,2,outBufHex.length-2));
+
+		closeSock(fd);
+		
+		return rc;
+	}
+	
+	public Socket openSock(String ip,String port,int timeout){
+		
+		int iPort;
+		try {
+			iPort = Integer.parseInt(port);
+		} catch (Exception e) {
+			return null;
+		}
+		
+		Socket fd = new Socket();
+		InetSocketAddress address = new InetSocketAddress(ip, iPort);
+		try {
+			fd.connect(address,timeout);
+			fd.setSoTimeout(timeout);
+		} catch (IOException e) {
+			fd = null;
+//			e.printStackTrace();
+		}
+		return fd;
+	}
+	
+	public void closeSock(Socket fd){
+		try {
+			fd.close();
+		} catch (IOException e) {
+//			e.printStackTrace();
+		}
+	}
+	
+	public int dataInteractive(Socket fd,byte[] inBuf, int inLen,byte[] outBuf,int outLen){
+		int rc = 0;
+		InputStream in;
+		OutputStream out;
+		
+		try {
+			in = fd.getInputStream();
+			out = fd.getOutputStream();
+			
+			out.write(inBuf, 0, inLen);
+			rc = in.read(outBuf, 0, outLen);
+			
+			in.close();
+			out.close();
+		} catch (IOException e) {
+			return rc;
+//			e.printStackTrace();
+		}
+		
+		
+		return rc;
+	}
+	
+	public byte[] getCmd(String data) {
+		byte bs[];
+		byte bs2[] ;
+		short len;
+		List<Byte> list = new ArrayList<>();
+		
+		data = data.replace(" ", "");
+		transformationData(data,list);
+		bs = new byte[list.size()];
+		for(int i=0; i<list.size(); i++) {
+			bs[i] = list.get(i);
+		}
+		
+		len = (short)bs.length;
+		
+		bs2 = new byte[2+len];
+		
+		bs2[0] = (byte)((len & 0xFF00)>>8);
+		
+		bs2[1] = (byte)(len & 0x00FF);
+		
+		for(int i=0; i<len; i++) {
+			bs2[2+i] = bs[i];
+		}
+		return bs2;
+	}
+	
+	public String transformationData(String data,List<Byte> list) {
+		int begin,end;
+		byte bs[],bs2[];
+		String start,center,last;
+		
+		begin = data.indexOf('<');
+		end = data.indexOf('>');
+		if(begin!=-1 && end!=-1) {
+			start = data.substring(0, begin);
+			center = data.substring(begin+1,end);
+			last = data.substring(end+1,data.length());
+			
+			bs = center.getBytes();
+			bs2 = new byte[ bs.length/2];
+			packBCD(bs, bs2, bs.length);
+			
+			for(int i=0; i<start.length(); i++) {
+				list.add(start.getBytes()[i]);
+			}
+			
+			for(int i=0; i<bs2.length; i++) {
+				list.add(bs2[i]);
+			}
+			data = last;
+		}
+		
+		begin = data.indexOf('<');
+		end = data.indexOf('>');
+		if(begin!=-1 && end!=-1) {
+			data = transformationData(data,list);
+		}
+		
+		for(int i=0; i<data.length(); i++) {
+			list.add(data.getBytes()[i]);
+		}
+		return data;
+	}
+	
+	
+	public int unPackBCD(byte inBuf[], byte outBuf[], int len){
+		int active = 0;
+
+		for(int i=0; i<len; i++){
+			
+			if(active == 1) {
+				outBuf[i] = (byte) (inBuf[i/2]&0x0F);
+			}else {
+				outBuf[i] = (byte) ((inBuf[i/2]&0xF0)>>4);
+			}
+			active ^= 1;
+			
+			if(outBuf[i]<10 ) {
+				outBuf[i] += '0';	
+			}else{
+				outBuf[i] += ('A'-10);
+			}
+		}
+		return 0;
+	}
+	
+	public int packBCD(byte inBuf[], byte outBuf[], int len)
+	{
+		byte in, out;
+		int active = 0;
+		
+		for(int i=0; i<len; i++) 
+		{
+			in = inBuf[i];
+			out = outBuf[i/2];
+			
+			if(in > '9') {
+				in += 9;
+			}
+			
+			if(active == 1) {
+				outBuf[i/2] = (byte) ((out&0xF0) | (in&0x0F));
+			}else {
+				outBuf[i/2] = (byte) ((out&0x0F)|((in&0x0F)<<4));
+			}
+			active ^= 1;
+		}
+		return 0;
+	}
 }

@@ -133,7 +133,7 @@
 		<div class="form-group">
 			<input type="text" id="parameter" name="parameter" value="${parameter}" class="form-control">
 		</div>
-		<button onclick="page(1);" type="button" class="btn btn-default">
+		<button onclick="page(1);" type="button" class="btn btn-primary">
 		  <span>搜索</span>
 		</button>
 	</form>

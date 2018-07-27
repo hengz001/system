@@ -16,7 +16,7 @@
 		</div>
 		<div class="form-group">
 		<label>上传文件</label>
-		<input type="file" name="file1" id="file1" class="form-control"><br /> 
+		<input type="file" name="file1" id="file1"><br /> 
 		</div>
 		<div class="form-group">
 		<input type="submit" value="提交" class="form-control">

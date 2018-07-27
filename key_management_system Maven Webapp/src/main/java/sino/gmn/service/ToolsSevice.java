@@ -5,6 +5,7 @@ import java.io.InputStream;
 import java.io.PrintStream;
 import java.io.UnsupportedEncodingException;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -34,4 +35,10 @@ public interface ToolsSevice {
 	public String[] getFiles(HttpServletRequest request);
 	
 	public int  downloadFileAction(HttpServletRequest request, HttpServletResponse  response, String fileName);
+
+	public int operationHsm(String ip,String port,String inValue, Map<String, Object> map);
+	
+	public int unPackBCD(byte inBuf[], byte outBuf[], int len);
+	
+	public int packBCD(byte inBuf[], byte outBuf[], int len);
 }
