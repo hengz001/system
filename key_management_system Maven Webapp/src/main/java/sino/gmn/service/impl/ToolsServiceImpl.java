@@ -237,7 +237,9 @@ public class ToolsServiceImpl implements ToolsSevice {
 		
 		path= getDownloadPath(request)+fileName;
 		file= new File(path);
+		
 		response.reset();
+		fileName = fileName.replace(" ","-");
 		response.setHeader("Content-Disposition", "attchment;filename="+fileName);
 		response.setContentType("multipart/form-data");
 		

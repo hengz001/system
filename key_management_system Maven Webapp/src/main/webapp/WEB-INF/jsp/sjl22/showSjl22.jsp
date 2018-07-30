@@ -143,37 +143,29 @@
 	 <input type="button" value="搜索" onclick="page(1);">
 	 -->
 			
-	<table
-		class="table table-striped table-bordered table-hover table-condensed"
+	<table class="table table-striped table-bordered table-hover table-condensed"
 		style="TABLE-LAYOUT:fixed">
 		<thead>
 			<tr >
-				<td
-					style="width:5%;word-break:keep-all;white-space:nowrap;overflow:hidden;text-overflow:ellipsis"><h5>
+				<td class="info" style="width:5%;word-break:keep-all;white-space:nowrap;overflow:hidden;text-overflow:ellipsis"><h5>
 						<em><strong>*</strong></em>
 						</h5></td>
-				<td
-					style="width:15%;word-break:keep-all;white-space:nowrap;overflow:hidden;text-overflow:ellipsis"><h5>
+				<td class="info" style="width:15%;word-break:keep-all;white-space:nowrap;overflow:hidden;text-overflow:ellipsis"><h5>
 						<em><strong>命令</strong></em>
 						</h5></td>
-				<td
-					style="width:15%;word-break:keep-all;white-space:nowrap;overflow:hidden;text-overflow:ellipsis"><h5>
+				<td class="info" style="width:15%;word-break:keep-all;white-space:nowrap;overflow:hidden;text-overflow:ellipsis"><h5>
 						<em><strong>请求</strong></em>
 						</h5></td>
-				<td
-					style="width:15%;word-break:keep-all;white-space:nowrap;overflow:hidden;text-overflow:ellipsis"><h5>
+				<td class="info" style="width:15%;word-break:keep-all;white-space:nowrap;overflow:hidden;text-overflow:ellipsis"><h5>
 						<em><strong>响应</strong></em>
 						</h5></td>
-				<td
-					style="width:15%;word-break:keep-all;white-space:nowrap;overflow:hidden;text-overflow:ellipsis"><h5>
+				<td class="info" style="width:15%;word-break:keep-all;white-space:nowrap;overflow:hidden;text-overflow:ellipsis"><h5>
 						<em><strong>描述</strong></em>
 						</h5></td>
-				<td
-					style="width:15%;word-break:keep-all;white-space:nowrap;overflow:hidden;text-overflow:ellipsis"><h5>
+				<td class="info" style="width:15%;word-break:keep-all;white-space:nowrap;overflow:hidden;text-overflow:ellipsis"><h5>
 						<em><strong>修改时间</strong></em>
 						</h5></td>
-				<td
-					style="width:15%;word-break:keep-all;white-space:nowrap;overflow:hidden;text-overflow:ellipsis"><h5>
+				<td class="info" style="width:15%;word-break:keep-all;white-space:nowrap;overflow:hidden;text-overflow:ellipsis"><h5>
 						<em><strong>修改用户</strong></em>
 						</h5></td>
 			</tr>
@@ -183,7 +175,7 @@
 				<tr >
 					<td
 						style="width:5%;word-break:keep-all;white-space:nowrap;overflow:hidden;text-overflow:ellipsis"
-						title="${obj.sId}"><small><small><em>${obj.sId}</em></small></small></td>
+						title="${obj.sId}"><small><em>${obj.sId}</em></small></td>
 					<td
 						style="width:15%;word-break:keep-all;white-space:nowrap;overflow:hidden;text-overflow:ellipsis"
 						title="${obj.sCommand}"><small><em>${obj.sCommand}</em></small></td>
@@ -207,6 +199,5 @@
 			</c:forEach>
 		</tbody>
 	</table>
-
 </body>
 </html>

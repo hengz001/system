@@ -30,11 +30,12 @@
 		<jsp:include page="../common/title.jsp"></jsp:include>	
 		
 		<div class="progress">
-		  <div id="d1" class="progress-bar progress-bar-info" role="progressbar" aria-valuenow="45" aria-valuemin="0" aria-valuemax="100" style="width: 0%">
-		    0%
+		  <div id="d1" class="progress-bar" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: 0%;">
+		    <span class="sr-only">0% Complete</span>
 		  </div>
 		</div>
 		
+		<!-- 
 		<button type="button" class="btn btn-default btn-lg">
 		  <span class="glyphicon glyphicon-off"></span>
 		</button>			
@@ -56,5 +57,6 @@
 		<button type="button" class="btn btn-default btn-lg">
 		  <span class="glyphicon glyphicon-cloud"></span>
 		</button>	
+		 -->
 	</body>
 </html>

@@ -10,23 +10,32 @@
 	<jsp:include page="../common/title.jsp"></jsp:include>	
 
 	<form action="${pageContext.request.contextPath}/sjl22/add.action" method="post" class="">
-		<div class="form-group">
-			<label for="sRequest">命令</label> <input type="text"
-				class="form-control" id="sRequest" name="sRequest" placeholder="NC">
+		
+		<div class="input-group">
+			<span class="input-group-addon">命令</span>
+			<input type="text" class="form-control" id="sRequest" name="sRequest" placeholder="NC">
 		</div>
-		<div class="form-group">
-			<label for="sResponse">返回</label> <input type="text"
-				class="form-control" id="sResponse" name="sResponse" placeholder="ND...">
+		<br>
+		
+		<div class="input-group">
+			<span class="input-group-addon">返回</span> 
+			<input type="text" class="form-control" id="sResponse" name="sResponse" placeholder="ND...">
 		</div>
-		<div class="form-group">
-			<label for="sDescribe">描述</label> <input type="text"
-				class="form-control" id="sDescribe" name="sDescribe" placeholder="描述">
+		<br>
+				
+		<div class="input-group">
+			<span class="input-group-addon">描述</span>
+			<input type="text" class="form-control" id="sDescribe" name="sDescribe" placeholder="描述">
 		</div>
-		<div class="form-group">
-			<label for="api_update_user">操作用户</label> <input type="text"
-				class="form-control" id="sUpdateUser" name="sUpdateUser" placeholder="hengz">
+		<br>
+				
+		<div class="input-group">
+			<span class="input-group-addon">用户</span>
+			<input type="text" class="form-control" id="sUpdateUser" name="sUpdateUser" placeholder="hengz">
 		</div>
-		<p class="text-center">
+		<br>
+				
+		<p align="center">
 			<button type="submit" class="btn btn-primary">提交</button>
 		</p>
 	</form>
