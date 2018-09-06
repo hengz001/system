@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="sino.gmn.dao.CmdMapper">
+  <resultMap id="CmdMap" type="sino.gmn.entity.Cmd">
+    <result column="id" jdbcType="INTEGER" property="id" />
+    <result column="command" jdbcType="VARCHAR" property="command" />
+    <result column="request" jdbcType="VARCHAR" property="request" />
+    <result column="response" jdbcType="VARCHAR" property="response" />
+    <result column="datetime" jdbcType="TIMESTAMP" property="datetime" />
+    <result column="user" jdbcType="VARCHAR" property="user" />
+    <result column="note" jdbcType="VARCHAR" property="note" />
+    <result column="flag" jdbcType="INTEGER" property="flag" />
+  </resultMap>
+	
+	<insert id="cmdAdd" parameterType="sino.gmn.entity.Cmd">
+		insert into cmd (command,request,
+			response,datetime,
+			user,note,flag) 
+		values (#{command},#{request},
+			#{response},#{datetime},
+			#{user},#{note},#{flag})
+	</insert>
+	
+	<update id="cmdDelete" parameterType="int">
+		update cmd set flag=0 where id=#{id} 
+	</update>
+	
+	<update id="cmdDeleteArray" parameterType="int[]">
+		update cmd set flag=0 
+			where id in
+				<foreach collection="array" item="arr" index="no" open="(" separator="," close=")">
+					#{arr}
+				</foreach> 
+	</update>
+	
+	
+	<update id="cmdUpdate" parameterType="sino.gmn.entity.Cmd">
+		update cmd 
+			set command = #{command},
+				request = #{request},
+			 	response = #{response},
+			 	datetime = #{datetime},
+			 	user = #{user},
+			 	note = #{note},
+			 	flag = #{flag}
+					where id = #{id}
+	</update>
+	
+	<update id="cmdUpdateAll" parameterType="int">
+		update cmd set flag = #{flag}
+	</update>
+	
+	<select id="cmdSearch"  resultMap="CmdMap" parameterType="int">
+		select id,command,request,response,datetime,user,note,flag
+			from cmd 
+				where id=#{id} and flag=1
+	</select>
+	
+	<select id="cmdSearchAll" resultMap="CmdMap">
+		select id,command,request,response,datetime,user,note,flag
+			from cmd 
+				where flag=1 
+					order by id asc
+	</select>
+	
+	<select id="cmdSearchPageParamOrder"  resultMap="CmdMap">
+		select id,command,request,response,datetime,user,note,flag
+			from cmd where
+				<if test="null!=param1 and ''!=param1 and null!=param2 and ''!=param2">
+					${param1} like "%"#{param2}"%" and 
+				</if>  
+					flag=1
+				<if test="null!=sort and ''!=sort and null!=order and ''!=order">
+					order by ${sort} 
+					<if test="'asc'==order">
+						asc
+					</if>
+					<if test="'desc'==order">
+						desc
+					</if>
+				</if>
+					limit #{page},#{rows}
+	</select>
+	
+	<select id="cmdCountParamOrder" resultType="int">
+		select count(id) from cmd where  
+		<if test="null!=param1 and ''!=param1 and null!=param2 and ''!=param2">
+			${param1} like "%"#{param2}"%" and 
+		</if>  
+			flag=1
+	</select>
+	
+	<delete id="cmdDeleteReal" parameterType="int">
+		delete from cmd where id = #{id}
+	</delete>
+	
+</mapper>
