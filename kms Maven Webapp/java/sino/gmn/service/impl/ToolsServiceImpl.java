@@ -41,10 +41,9 @@ public class ToolsServiceImpl implements ToolsSevice {
 		List<String> list = new ArrayList<String>();
 		
 		while((len=in.read(buff))!=-1) {
-			for (int i=0; i<len; i++) {
-				sb.append((char)buff[i]);
-			}
+			sb.append(new String(buff, 0, len));
 		}
+		
 		in.close();
 		
 		data = sb.toString();

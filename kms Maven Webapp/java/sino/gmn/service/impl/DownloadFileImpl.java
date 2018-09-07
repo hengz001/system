@@ -36,6 +36,14 @@ public class DownloadFileImpl implements DownloadFileService {
 	}
 
 	public List<DownloadFile> searchPageParamOrder(int page, int rows, String name, String value, String sort, String order){
+		if(null!=sort){
+			if(sort.equals("uploadFileDate")){
+				sort = "upload_file_date";
+			}
+			if(sort.equals("downloadFileDate")){
+				sort = "download_file_date";
+			}
+		}
 		return downloadFileDao.searchPageParamOrder((page-1)*rows, page*rows, name, value, sort, order);
 	}
 }

@@ -39,8 +39,8 @@ function showdiv(str) {
 	var msgw,
 		msgh,
 		bordercolor;
-	msgw = 200; //提示窗口的宽度    
-	msgh = 50; //提示窗口的高度    
+	msgw = 100; //提示窗口的宽度    
+	msgh = 30; //提示窗口的高度    
 	bordercolor = "#336699"; //提示窗口的边框颜色    
 	titlecolor = "#99CCFF"; //提示窗口的标题颜色    
 
