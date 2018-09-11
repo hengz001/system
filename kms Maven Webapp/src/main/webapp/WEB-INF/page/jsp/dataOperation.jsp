@@ -118,7 +118,8 @@
 			var formData = new FormData();
 			formData.append("file",document.getElementById("file").files[0]);
 			
-			showdiv('添加中...');
+			$('#dataDlg').dialog('close');
+			showdiv('批量添加中...');
 			$.ajax({
 				url: "${pageContext.request.contextPath}/cmd/uploadDataFile.do",
 				type: "post",
@@ -162,14 +163,16 @@
 		striped="true">
 	<thead>
 		<tr>
-			<th checkbox="true" field="id" width="30" sortable="true">ID</th>
+			<th checkbox="true" field="id" width="10" sortable="true">ID</th>
+			<th field="request" width="40" sortable="true">命令</th>
+			<th field="response" width="40" sortable="true">响应</th>
+			<th field="datetime" formatter="formatDate" width="10" sortable="true">更新时间</th>
+			<!-- 
 			<th field="command" width="50" sortable="true">命令</th>
-			<th field="request" width="50" sortable="true">请求</th>
-			<th field="response" width="50" sortable="true">响应</th>
 			<th field="user" width="50" sortable="true">用户</th>
 			<th field="note" width="50" sortable="true">描述</th>
-			<th field="datetime" formatter="formatDate" width="80" sortable="true">更新时间</th>
 			<th field="flag" width="20" sortable="true">状态</th>
+			 -->
 		</tr>
 	</thead>
 	</table>
