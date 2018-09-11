@@ -118,7 +118,8 @@
 			var formData = new FormData();
 			formData.append("file",document.getElementById("file").files[0]);
 			
-			showdiv('添加中...');
+			$('#dataDlg').dialog('close');
+			showdiv('批量添加中...');
 			$.ajax({
 				url: "${pageContext.request.contextPath}/cmd/uploadDataFile.do",
 				type: "post",
